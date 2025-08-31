@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Darood Counter - صلوا علیہ وسلم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --primary-light: #4CAF50;
+            --secondary: #FF8F00;
+            --accent: #2E7D32;
+            --gold: #FFD700;
+            --dark: #1A1A1A;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --islamic-blue: #0D47A1;
+            --islamic-green: #2E7D32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Islamic Pattern Background */
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 25% 25%, transparent 20%, var(--gold) 21%, var(--gold) 25%, transparent 26%),
+                radial-gradient(circle at 75% 25%, transparent 20%, var(--gold) 21%, var(--gold) 25%, transparent 26%),
+                radial-gradient(circle at 25% 75%, transparent 20%, var(--gold) 21%, var(--gold) 25%, transparent 26%),
+                radial-gradient(circle at 75% 75%, transparent 20%, var(--gold) 21%, var(--gold) 25%, transparent 26%);
+            background-size: 100px 100px;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            font-size: 14px;
+            color: var(--accent);
+            font-family: 'Amiri', serif;
+        }
+
+        .global-stats {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 15px 25px;
+            border-radius: 50px;
+            color: white;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-title {
+            font-family: 'Amiri', serif;
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            color: var(--gold);
+            margin: 30px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Counter Section */
+        .counter-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .counter-display {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .counter-title {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .personal-counter {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            min-width: 200px;
+            justify-content: center;
+            font-size: 20px;
+            padding: 20px 40px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #FFA726);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 143, 0, 0.3);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #f44336, #e57373);
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
+        }
+
+        /* User Input Section */
+        .user-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        /* Recent Submissions */
+        .recent-submissions {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .submissions-title {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .submission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: rgba(46, 125, 50, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .submission-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .submission-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .submission-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .submission-count {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .global-stats {
+                gap: 15px;
+                padding: 10px 20px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .counter-section {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .personal-counter {
+                font-size: 48px;
+            }
+
+            .counter-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .stat-number {
+                font-size: 18px;
+            }
+
+            .submission-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+
+        /* Success Animation */
+        @keyframes success {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .success-animation {
+            animation: success 0.3s ease-in-out;
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.3);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { top: 40%; right: 25%; animation-delay: 1s; }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text {
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-stat {
+            text-align: center;
+        }
+
+        .footer-stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .footer-stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Islamic Pattern Background -->
+    <div class="islamic-pattern"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-element">☪</div>
+    <div class="floating-element">✦</div>
+    <div class="floating-element">❋</div>
+    <div class="floating-element">✧</div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Global Darood Counter</h1>
+                        <p>صلوا علیہ وسلم</p>
+                    </div>
+                </div>
+                <div class="global-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="globalCount">0</span>
+                        <span class="stat-label">Total Darood</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="todayCount">0</span>
+                        <span class="stat-label">Today</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="usersCount">0</span>
+                        <span class="stat-label">Users</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">Send Blessings Upon Our Beloved Prophet</h1>
+                <p class="hero-subtitle">Join millions of Muslims worldwide in sending Darood and Salawat upon Prophet Muhammad (ﷺ). Every recitation brings immense blessings and brings us closer to Allah.</p>
+                <div class="arabic-text">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ</div>
+            </section>
+
+            <!-- Counter Section -->
+            <section class="counter-section">
+                <div class="counter-display">
+                    <h2 class="counter-title">Your Personal Darood Counter</h2>
+                    <div class="personal-counter" id="personalCounter">0</div>
+                    <p style="color: #666; margin-top: 10px;">Click the button below each time you recite Darood Sharif</p>
+                </div>
+
+                <div class="counter-controls">
+                    <button class="btn btn-primary" id="incrementBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Darood (+1)
+                    </button>
+                </div>
+
+                <div class="counter-controls">
+                    <button class="btn btn-secondary" id="add10Btn">
+                        <i class="fas fa-plus"></i>
+                        Add 10
+                    </button>
+                    <button class="btn btn-secondary" id="add100Btn">
+                        <i class="fas fa-plus"></i>
+                        Add 100
+                    </button>
+                    <button class="btn btn-reset" id="resetBtn">
+                        <i class="fas fa-undo"></i>
+                        Reset
+                    </button>
+                </div>
+
+                <!-- User Input Section -->
+                <div class="user-section">
+                    <div class="input-group">
+                        <label for="userName">Your Name (Optional)</label>
+                        <input type="text" id="userName" placeholder="Enter your name to be featured in recent submissions">
+                    </div>
+                    <button class="btn btn-primary" id="submitBtn" style="width: 100%;">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Submit to Global Counter
+                    </button>
+                </div>
+            </section>
+
+            <!-- Recent Submissions -->
+            <section class="recent-submissions">
+                <h3 class="submissions-title">Recent Submissions</h3>
+                <div id="recentSubmissions">
+                    <div class="loading" id="loadingSubmissions">
+                        <div class="spinner"></div>
+                        <p>Loading recent submissions...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">May Allah accept our humble efforts and shower His blessings upon us all</p>
+            <div class="footer-stats">
+                <div class="footer-stat">
+                    <div class="footer-stat-number" id="footerGlobalCount">0</div>
+                    <div class="footer-stat-label">Total Darood Recited</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number" id="footerTodayCount">0</div>
+                    <div class="footer-stat-label">Recited Today</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number" id="footerUsersCount">0</div>
+                    <div class="footer-stat-label">Active Users</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.7; font-size: 14px;">
+                "Indeed, Allah and His angels send blessings upon the Prophet. O you who believe, send blessings upon him and greet him with peace." - Quran 33:56
+            </p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration (using the config from the provided code)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKsbm4aYLis3A3fjW02eCl2kvsHTtJ9Dg",
+            authDomain: "halalapk-12e43.firebaseapp.com",
+            projectId: "halalapk-12e43",
+            storageBucket: "halalapk-12e43.firebasestorage.app",
+            messagingSenderId: "783096142672",
+            appId: "1:783096142672:web:3fa932d28faa2523f9aa55"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // DOM Elements
+        const personalCounterEl = document.getElementById('personalCounter');
+        const incrementBtn = document.getElementById('incrementBtn');
+        const add10Btn = document.getElementById('add10Btn');
+        const add100Btn = document.getElementById('add100Btn');
+        const resetBtn = document.getElementById('resetBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const userNameInput = document.getElementById('userName');
+        const recentSubmissionsEl = document.getElementById('recentSubmissions');
+        const loadingSubmissionsEl = document.getElementById('loadingSubmissions');
+
+        // Global stats elements
+        const globalCountEl = document.getElementById('globalCount');
+        const todayCountEl = document.getElementById('todayCount');
+        const usersCountEl = document.getElementById('usersCount');
+        const footerGlobalCountEl = document.getElementById('footerGlobalCount');
+        const footerTodayCountEl = document.getElementById('footerTodayCount');
+        const footerUsersCountEl = document.getElementById('footerUsersCount');
+
+        // Local storage keys
+        const PERSONAL_COUNT_KEY = 'daroodPersonalCount';
+        const USER_NAME_KEY = 'daroodUserName';
+
+        // State
+        let personalCount = parseInt(localStorage.getItem(PERSONAL_COUNT_KEY)) || 0;
+        let isSubmitting = false;
+
+        // Initialize the app
+        function initApp() {
+            // Load saved data
+            personalCounterEl.textContent = personalCount.toLocaleString();
+            userNameInput.value = localStorage.getItem(USER_NAME_KEY) || '';
+
+            // Add event listeners
+            incrementBtn.addEventListener('click', () => incrementCounter(1));
+            add10Btn.addEventListener('click', () => incrementCounter(10));
+            add100Btn.addEventListener('click', () => incrementCounter(100));
+            resetBtn.addEventListener('click', resetCounter);
+            submitBtn.addEventListener('click', submitToGlobal);
+            userNameInput.addEventListener('input', saveUserName);
+
+            // Load initial data
+            loadGlobalStats();
+            loadRecentSubmissions();
+
+            // Set up real-time listeners
+            setupRealtimeListeners();
+
+            // Refresh data periodically
+            setInterval(loadGlobalStats, 30000); // Every 30 seconds
+        }
+
+        // Increment counter
+        function incrementCounter(amount) {
+            personalCount += amount;
+            personalCounterEl.textContent = personalCount.toLocaleString();
+            localStorage.setItem(PERSONAL_COUNT_KEY, personalCount);
+            
+            // Add success animation
+            personalCounterEl.classList.add('success-animation');
+            setTimeout(() => {
+                personalCounterEl.classList.remove('success-animation');
+            }, 300);
+
+            // Play sound effect (if available)
+            playClickSound();
+        }
+
+        // Reset counter
+        function resetCounter() {
+            if (confirm('Are you sure you want to reset your personal counter? This action cannot be undone.')) {
+                personalCount = 0;
+                personalCounterEl.textContent = '0';
+                localStorage.setItem(PERSONAL_COUNT_KEY, personalCount);
+            }
+        }
+
+        // Save user name
+        function saveUserName() {
+            localStorage.setItem(USER_NAME_KEY, userNameInput.value);
+        }
+
+        // Submit to global counter
+        async function submitToGlobal() {
+            if (isSubmitting) return;
+            if (personalCount === 0) {
+                alert('Please recite some Darood before submitting!');
+                return;
+            }
+
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+            try {
+                const userName = userNameInput.value.trim() || 'Anonymous';
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+
+                // Create submission document
+                const submissionData = {
+                    name: userName,
+                    count: personalCount,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    date: today,
+                    ip: await getUserIP() // For preventing spam
+                };
+
+                // Add to submissions collection
+                await db.collection('darood_submissions').add(submissionData);
+
+                // Update global stats
+                await updateGlobalStats(personalCount, today);
+
+                // Reset personal counter after successful submission
+                personalCount = 0;
+                personalCounterEl.textContent = '0';
+                localStorage.setItem(PERSONAL_COUNT_KEY, personalCount);
+
+                // Show success message
+                alert(`Jazakallahu Khair! Your ${personalCount} Darood have been added to the global counter. May Allah accept your efforts!`);
+
+                // Refresh data
+                loadGlobalStats();
+                loadRecentSubmissions();
+
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert('There was an error submitting your Darood. Please try again.');
+            } finally {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Submit to Global Counter';
+            }
+        }
+
+        // Update global stats
+        async function updateGlobalStats(count, date) {
+            const batch = db.batch();
+
+            // Update total count
+            const totalRef = db.collection('stats').doc('total');
+            batch.set(totalRef, {
+                count: firebase.firestore.FieldValue.increment(count),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            // Update today's count
+            const todayRef = db.collection('stats').doc(`daily_${date}`);
+            batch.set(todayRef, {
+                count: firebase.firestore.FieldValue.increment(count),
+                date: date,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            // Update user count (approximate)
+            const usersRef = db.collection('stats').doc('users');
+            batch.set(usersRef, {
+                count: firebase.firestore.FieldValue.increment(1),
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+            await batch.commit();
+        }
+
+        // Load global stats
+        async function loadGlobalStats() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+
+                // Load total count
+                const totalDoc = await db.collection('stats').doc('total').get();
+                const totalCount = totalDoc.exists ? (totalDoc.data().count || 0) : 0;
+
+                // Load today's count
+                const todayDoc = await db.collection('stats').doc(`daily_${today}`).get();
+                const todayCount = todayDoc.exists ? (todayDoc.data().count || 0) : 0;
+
+                // Load users count
+                const usersDoc = await db.collection('stats').doc('users').get();
+                const usersCount = usersDoc.exists ? (usersDoc.data().count || 0) : 0;
+
+                // Update UI
+                updateStatsUI(totalCount, todayCount, usersCount);
+
+            } catch (error) {
+                console.error('Error loading global stats:', error);
+            }
+        }
+
+        // Update stats UI
+        function updateStatsUI(total, today, users) {
+            const totalFormatted = total.toLocaleString();
+            const todayFormatted = today.toLocaleString();
+            const usersFormatted = users.toLocaleString();
+
+            globalCountEl.textContent = totalFormatted;
+            todayCountEl.textContent = todayFormatted;
+            usersCountEl.textContent = usersFormatted;
+            footerGlobalCountEl.textContent = totalFormatted;
+            footerTodayCountEl.textContent = todayFormatted;
+            footerUsersCountEl.textContent = usersFormatted;
+        }
+
+        // Load recent submissions
+        async function loadRecentSubmissions() {
+            try {
+                loadingSubmissionsEl.style.display = 'block';
+                
+                const snapshot = await db.collection('darood_submissions')
+                    .orderBy('timestamp', 'desc')
+                    .limit(10)
+                    .get();
+
+                const submissions = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.timestamp) {
+                        submissions.push({
+                            id: doc.id,
+                            ...data,
+                            timestamp: data.timestamp.toDate()
+                        });
+                    }
+                });
+
+                renderRecentSubmissions(submissions);
+
+            } catch (error) {
+                console.error('Error loading recent submissions:', error);
+                recentSubmissionsEl.innerHTML = '<p style="text-align: center; color: #666;">Error loading recent submissions</p>';
+            } finally {
+                loadingSubmissionsEl.style.display = 'none';
+            }
+        }
+
+        // Render recent submissions
+        function renderRecentSubmissions(submissions) {
+            if (submissions.length === 0) {
+                recentSubmissionsEl.innerHTML = '<p style="text-align: center; color: #666;">No recent submissions yet. Be the first to contribute!</p>';
+                return;
+            }
+
+            const html = submissions.map(submission => {
+                const timeAgo = getTimeAgo(submission.timestamp);
+                return `
+                    <div class="submission-item">
+                        <div class="submission-info">
+                            <div class="submission-name">${escapeHtml(submission.name)}</div>
+                            <div class="submission-time">${timeAgo}</div>
+                        </div>
+                        <div class="submission-count">+${submission.count.toLocaleString()}</div>
+                    </div>
+                `;
+            }).join('');
+
+            recentSubmissionsEl.innerHTML = html;
+        }
+
+        // Setup real-time listeners
+        function setupRealtimeListeners() {
+            // Listen for new submissions
+            db.collection('darood_submissions')
+                .orderBy('timestamp', 'desc')
+                .limit(1)
+                .onSnapshot(snapshot => {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type === 'added') {
+                            // Refresh recent submissions when new submission is added
+                            setTimeout(loadRecentSubmissions, 1000);
+                        }
+                    });
+                });
+
+            // Listen for stats changes
+            db.collection('stats').doc('total')
+                .onSnapshot(doc => {
+                    if (doc.exists) {
+                        const count = doc.data().count || 0;
+                        globalCountEl.textContent = count.toLocaleString();
+                        footerGlobalCountEl.textContent = count.toLocaleString();
+                    }
+                });
+        }
+
+        // Utility functions
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch {
+                return 'unknown';
+            }
+        }
+
+        function playClickSound() {
+            // Create a simple click sound using Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (error) {
+                // Ignore audio errors
+            }
+        }
+
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // Handle visibility change to refresh data when user returns
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                loadGlobalStats();
+                loadRecentSubmissions();
+            }
+        });
+    </script>
+</body>
+</html>
+
